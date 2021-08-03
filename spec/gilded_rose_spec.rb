@@ -37,8 +37,14 @@ describe GildedRose do
       it "SellIn decreases by 1 each day" do
         expect {@test.update_quality()}.to change { @test.items[2].sell_in }.by(-1)
       end
-
-
     end
+    
+    context "Aged Brie" do
+      it "Quality increases by one each day" do
+        expect {@test.update_quality()}.to change { @test.items[3].quality }.by(1)
+      end
+    end
+
+    
   end
 end
