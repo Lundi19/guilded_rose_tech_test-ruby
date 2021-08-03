@@ -13,7 +13,7 @@ describe GildedRose do
       Item.new("Backstage passes to a TAFKAL80ETC concert", 7, 20),
       Item.new("Backstage passes to a TAFKAL80ETC concert", 3, 20),
       Item.new("Backstage passes to a TAFKAL80ETC concert", 15, 20),
-      Item.new("Backstage passes to a TAFKAL80ETC concert", 11, 50),
+      Item.new("Backstage passes to a TAFKAL80ETC concert", 11, 50)
     ]
     @test = GildedRose.new(test_items)
   end
