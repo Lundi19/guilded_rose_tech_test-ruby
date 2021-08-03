@@ -18,6 +18,11 @@ describe GildedRose do
     it "does not change the name" do
       expect(@test.update_quality[0].name).to eq "foo"
     end
-  end
 
+    context "for a normal item" do
+      it "at end of each day, quality decreases by 1 if sell_in value is >= 0" do
+        expect {@test.update_quality()}.to change { @test.items[2].quality }.by(-1)
+      end
+  end
+end
 end
