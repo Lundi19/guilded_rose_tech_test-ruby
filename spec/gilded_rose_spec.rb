@@ -6,7 +6,7 @@ describe GildedRose do
     test_items = [
       Item.new("foo", 0, 0),
       Item.new("Sake", 10, 20),
-      Item.new("Normal Item", 1, 10),
+      Item.new("Normal Item", 2, 10),
       Item.new("Aged Brie", 10, 20),
       Item.new("Sulfuras, Hand of Ragnaros", 0, 50),
       Item.new("Backstage passes to a TAFKAL80ETC concert", 11, 20),

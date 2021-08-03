@@ -62,14 +62,10 @@ class GildedRose
   end
 
   def update_quality_normal(item)
-    if item.quality > 0
-      if item.sell_in > 0 
-        item.quality -= 1
-      elsif item.sell_in <= 0
-        item.quality -= 2
-      end
-    end
     item.sell_in -= 1
+    return if item.quality <= 0
+    item.quality -= 1 if item.sell_in <= 0
+    item.quality -= 1
   end
 
 
