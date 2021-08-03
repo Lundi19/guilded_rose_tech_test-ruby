@@ -20,8 +20,13 @@ describe GildedRose do
     end
 
     context "for a normal item" do
-      it "at end of each day, quality decreases by 1 if sell_in value is >= 0" do
+      it "quality decreases by 1 if sell_in value is >= 0" do
         expect {@test.update_quality()}.to change { @test.items[2].quality }.by(-1)
+      end
+
+      it "quality decreases by 2 if sell_in value is < 0" do
+        @test.update_quality()
+        expect {@test.update_quality()}.to change { @test.items[2].quality }.by(-2)
       end
   end
 end
