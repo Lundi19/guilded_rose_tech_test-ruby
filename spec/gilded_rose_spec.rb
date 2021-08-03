@@ -3,7 +3,7 @@ require File.join(File.dirname(__FILE__), '../gilded_rose')
 describe GildedRose do
 
   before do
-    TEST_ITEMS = [
+    test_items = [
       Item.new("foo", 0, 0),
       Item.new("Sake", 10, 20),
       Item.new("Normal Item", 1, 10),
@@ -11,7 +11,7 @@ describe GildedRose do
       Item.new("Sulfuras, Hand of Ragnaros", 0, 50),
       Item.new("Backstage passes to a TAFKAL80ETC concert", 15, 20)
     ]
-    @test = GildedRose.new(TEST_ITEMS)
+    @test = GildedRose.new(test_items)
   end
 
   describe "#update_quality" do
@@ -28,6 +28,13 @@ describe GildedRose do
         @test.update_quality()
         expect {@test.update_quality()}.to change { @test.items[2].quality }.by(-2)
       end
+
+      it "quality never goes below zero" do
+        6.times { @test.update_quality() }
+        expect {@test.update_quality()}.to change { @test.items[2].quality }.by(0)
+      end
+
+      
+    end
   end
-end
 end
