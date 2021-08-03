@@ -13,7 +13,8 @@ describe GildedRose do
       Item.new("Backstage passes to a TAFKAL80ETC concert", 7, 20),
       Item.new("Backstage passes to a TAFKAL80ETC concert", 3, 20),
       Item.new("Backstage passes to a TAFKAL80ETC concert", 15, 20),
-      Item.new("Backstage passes to a TAFKAL80ETC concert", 11, 50)
+      Item.new("Backstage passes to a TAFKAL80ETC concert", 11, 50),
+      Item.new("Aged Brie", 10, 50),
     ]
     @test = GildedRose.new(test_items)
   end
@@ -46,6 +47,21 @@ describe GildedRose do
     context "Aged Brie" do
       it "Quality increases by one each day" do
         expect {@test.update_quality()}.to change { @test.items[3].quality }.by(1)
+      end
+
+      it 'quality can not be over 50' do
+        expect { @test.update_quality() }.to change { @test.items[10].quality }.by(0)
+        expect(@test.items[10].quality).to eq 50
+
+        3.times { @test.update_quality() }
+        expect(@test.items[9].quality).to eq 50
+      end
+
+      it "quality increase by 2 if sell_in is less than 0" do
+        11.times { @test.update_quality }
+        # expect(@test.items[3].quality).to eq 30
+        # expect { @test.update_quality }.to change { @test.items[3].quality }.by(2)
+        expect(@test.items[3].quality).to eq 32
       end
     end
 
@@ -80,12 +96,6 @@ describe GildedRose do
         expect(@test.items[5].quality).to eq 0
       end
     end
-      it 'quality can not be over 50' do
-        expect { @test.update_quality() }.to change { @test.items[9].quality }.by(0)
-        expect(@test.items[9].quality).to eq 50
-
-        3.times { @test.update_quality() }
-        expect(@test.items[9].quality).to eq 50
-      end
+      
   end
 end

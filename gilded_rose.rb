@@ -8,7 +8,10 @@ class GildedRose
   def update_quality()
     @items.each do |item|
       if item.name == "Normal Item"
-        return update_quality_normal(item)
+        normal_update(item)
+      end
+      if item.name == "Aged Brie"
+        brie_update(item)
       end
     end
 
@@ -61,11 +64,19 @@ class GildedRose
     # end
   end
 
-  def update_quality_normal(item)
+  def normal_update(item)
     item.sell_in -= 1
     return if item.quality <= 0
     item.quality -= 1 if item.sell_in <= 0
     item.quality -= 1
+  end
+
+  def brie_update(item)
+    item.sell_in -= 1
+    return if item.quality >= 50
+
+    item.quality += 1
+    item.quality += 1 if item.sell_in < 0
   end
 
 
