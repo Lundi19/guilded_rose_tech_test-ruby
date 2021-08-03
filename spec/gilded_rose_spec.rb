@@ -19,7 +19,7 @@ describe GildedRose do
       expect(@test.update_quality[0].name).to eq "foo"
     end
 
-    context "for a normal item" do
+    context "Normal item" do
       it "quality decreases by 1 if sell_in value is >= 0" do
         expect {@test.update_quality()}.to change { @test.items[2].quality }.by(-1)
       end
@@ -38,12 +38,34 @@ describe GildedRose do
         expect {@test.update_quality()}.to change { @test.items[2].sell_in }.by(-1)
       end
     end
-    
+
     context "Aged Brie" do
       it "Quality increases by one each day" do
         expect {@test.update_quality()}.to change { @test.items[3].quality }.by(1)
       end
     end
+
+    context "Sulfuras, Hand of Ragnaros" do
+      it "Quality stays the same" do
+        6.times { @test.update_quality() }
+        expect {@test.update_quality()}.to change { @test.items[4].quality }.by(0)
+      end
+
+      it "Sellin stays the same" do
+        6.times { @test.update_quality() }
+        expect {@test.update_quality()}.to change { @test.items[4].sell_in }.by(0)
+      end
+    end
+
+    
+
+
+
+    # context "Aged Brie" do
+    #   it "Quality increases by one each day" do
+    #     expect {@test.update_quality()}.to change { @test.items[3].quality }.by(1)
+    #   end
+    # end
 
     
   end
