@@ -16,6 +16,7 @@ describe GildedRose do
       Item.new("Backstage passes to a TAFKAL80ETC concert", 11, 50),
       Item.new("Aged Brie", 10, 50),
       Item.new("Conjured Hand of Darkness", 15, 40),
+      Item.new("Conjured Hand of Darkness", -3, 0),
 
     ]
     @test = GildedRose.new(test_items)
@@ -105,11 +106,15 @@ describe GildedRose do
         expect(@test.items[11].quality).to eq 38
       end
 
-      it "quality decreases by 4 if sell_in value is < 0" do
+      it "quality decreases by 4 if sell_in is < 0" do
         15.times { @test.update_quality() }
         expect(@test.items[11].quality).to eq 10
         expect { @test.update_quality() }.to change { @test.items[11].quality }.by(-4)
         expect(@test.items[11].quality).to eq 6
+      end
+
+      it "quality never decreases below zero" do
+         expect { @test.update_quality() }.to change { @test.items[12].quality }.by(0)
       end
     end
       
