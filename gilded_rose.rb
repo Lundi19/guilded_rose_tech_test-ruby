@@ -21,18 +21,12 @@ class GildedRose
           backstage = Backstage.new(item)
           backstage.update(item)
         when "Conjured Hand of Darkness"
-          conjured_update(item)
+          conjured = Conjured.new(item)
+          conjured.update(item)
       end
     end
   end 
-
-  def conjured_update(item)
-    item.sell_in -= 1
-    return if item.quality == 0
-    item.quality -= 2 if item.sell_in >= 0
-    item.quality -= 4 if item.sell_in < 0
-  end
-end   
+end  
 
 class Normal
   attr_reader :item
@@ -82,6 +76,7 @@ class Backstage
   def initialize(item)
     @item = item
   end
+
   def update(item)
     item.sell_in -= 1
     return if item.quality >= 50
@@ -91,6 +86,22 @@ class Backstage
     item.quality += 1 if item.sell_in < 5
   end
 end
+
+class Conjured
+
+  attr_reader :item
+
+  def initialize(item)
+    @item = item
+  end
+
+  def update(item)
+    item.sell_in -= 1
+    return if item.quality == 0
+    item.quality -= 2 if item.sell_in >= 0
+    item.quality -= 4 if item.sell_in < 0
+  end
+end   
 
 class Item
   attr_accessor :name, :sell_in, :quality
@@ -105,3 +116,5 @@ class Item
     "#{@name}, #{@sell_in}, #{@quality}"
   end
 end
+
+
