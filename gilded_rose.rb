@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GildedRose
   attr_reader :items
 
@@ -5,28 +7,28 @@ class GildedRose
     @items = items
   end
 
-  def update_quality()
+  def update_quality
     @items.each do |item|
       case item.name
-        when "Normal Item"
-          normal = Normal.new(item)
-          normal.update(item)
-        when "Aged Brie" 
-          brie = Brie.new(item)
-          brie.update(item)
-        when "Sulfuras, Hand of Ragnaros"
-          sulfuras = Sulfuras.new(item)
-          sulfuras.update(item)
-        when "Backstage passes to a TAFKAL80ETC concert" 
-          backstage = Backstage.new(item)
-          backstage.update(item)
-        when "Conjured Hand of Darkness"
-          conjured = Conjured.new(item)
-          conjured.update(item)
+      when 'Normal Item'
+        normal = Normal.new(item)
+        normal.update(item)
+      when 'Aged Brie'
+        brie = Brie.new(item)
+        brie.update(item)
+      when 'Sulfuras, Hand of Ragnaros'
+        sulfuras = Sulfuras.new(item)
+        sulfuras.update(item)
+      when 'Backstage passes to a TAFKAL80ETC concert'
+        backstage = Backstage.new(item)
+        backstage.update(item)
+      when 'Conjured Hand of Darkness'
+        conjured = Conjured.new(item)
+        conjured.update(item)
       end
     end
-  end 
-end  
+  end
+end
 
 class Normal
   attr_reader :item
@@ -38,6 +40,7 @@ class Normal
   def update(item)
     item.sell_in -= 1
     return if item.quality <= 0
+
     item.quality -= 1 if item.sell_in <= 0
     item.quality -= 1
   end
@@ -53,8 +56,9 @@ class Brie
   def update(item)
     item.sell_in -= 1
     return if item.quality >= 50
+
     item.quality += 1
-    item.quality += 1 if item.sell_in < 0
+    item.quality += 1 if item.sell_in.negative?
   end
 end
 
@@ -65,10 +69,8 @@ class Sulfuras
     @item = item
   end
 
-  def update(item)
-  end
-
-end  
+  def update(item); end
+end
 
 class Backstage
   attr_reader :item
@@ -80,7 +82,8 @@ class Backstage
   def update(item)
     item.sell_in -= 1
     return if item.quality >= 50
-    return item.quality = 0 if item.sell_in < 0
+    return item.quality = 0 if item.sell_in.negative?
+
     item.quality += 1
     item.quality += 1 if item.sell_in < 10
     item.quality += 1 if item.sell_in < 5
@@ -88,7 +91,6 @@ class Backstage
 end
 
 class Conjured
-
   attr_reader :item
 
   def initialize(item)
@@ -97,11 +99,12 @@ class Conjured
 
   def update(item)
     item.sell_in -= 1
-    return if item.quality == 0
+    return if item.quality.zero?
+
     item.quality -= 2 if item.sell_in >= 0
-    item.quality -= 4 if item.sell_in < 0
+    item.quality -= 4 if item.sell_in.negative?
   end
-end   
+end
 
 class Item
   attr_accessor :name, :sell_in, :quality
@@ -112,9 +115,7 @@ class Item
     @quality = quality
   end
 
-  def to_s()
+  def to_s
     "#{@name}, #{@sell_in}, #{@quality}"
   end
 end
-
-
