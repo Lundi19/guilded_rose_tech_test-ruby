@@ -8,27 +8,49 @@ class GildedRose
   def update_quality()
     @items.each do |item|
       case item.name
-        when "Normal Item" then normal_update(item)
-        when "Aged Brie" then brie_update(item)
+        when "Normal Item"
+          normal = Normal.new(item)
+          normal.update(item)
+        when "Aged Brie" 
+          brie = Brie.new(item)
+          brie.update(item)
         when "Sulfuras, Hand of Ragnaros" then sulfuras_update(item)
         when "Backstage passes to a TAFKAL80ETC concert" then backstage_update(item)
       end
     end
   end  
 
-  def normal_update(item)
-    item.sell_in -= 1
-    return if item.quality <= 0
-    item.quality -= 1 if item.sell_in <= 0
-    item.quality -= 1
+
+  class Normal
+    attr_reader :item
+
+    def initialize(item)
+      @item = item
+    end
+
+    def update(item)
+      item.sell_in -= 1
+      return if item.quality <= 0
+      item.quality -= 1 if item.sell_in <= 0
+      item.quality -= 1
+    end
+
+
   end
 
-  def brie_update(item)
-    item.sell_in -= 1
-    return if item.quality >= 50
+  class Brie
+    attr_reader :item
 
-    item.quality += 1
-    item.quality += 1 if item.sell_in < 0
+    def initialize(item)
+      @item = item
+    end
+
+    def update(item)
+      item.sell_in -= 1
+      return if item.quality >= 50
+      item.quality += 1
+      item.quality += 1 if item.sell_in < 0
+    end
   end
 
   def sulfuras_update(item)
