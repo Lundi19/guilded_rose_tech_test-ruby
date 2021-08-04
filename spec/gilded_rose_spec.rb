@@ -104,6 +104,13 @@ describe GildedRose do
         expect { @test.update_quality() }.to change { @test.items[11].quality }.by(-2)
         expect(@test.items[11].quality).to eq 38
       end
+
+      it "quality decreases by 4 if sell_in value is < 0" do
+        15.times { @test.update_quality() }
+        expect(@test.items[11].quality).to eq 10
+        expect { @test.update_quality() }.to change { @test.items[11].quality }.by(-4)
+        expect(@test.items[11].quality).to eq 6
+      end
     end
       
   end
